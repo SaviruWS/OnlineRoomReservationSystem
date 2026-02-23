@@ -3,18 +3,25 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="css/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>User Login</title>
-    </head>
-    <body>
-        <h1>User Login</h1>
         
+    </head>
+<body>
+    <div class="login-box">
+      
+        <h1 class="box-title">Ocean View Resort</h1>
+
         <form action="LoginServlet" method="post">
-            Username : <input type="text" name="Username" required><br><br>
-            
-            Password : <input type="password" name="Password" required><br>
-            
+            <label>Username</label>
+            <input type="text" name="Username" required>
+
+            <label>Password</label>
+            <input type="password" name="Password" required>
+
             <input type="submit" value="Login">
         </form>
-    </body>
+    </div>
+</body>
 </html>
