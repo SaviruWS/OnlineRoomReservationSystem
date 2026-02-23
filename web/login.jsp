@@ -1,17 +1,12 @@
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="css/style.css">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>User Login</title>
-        
-    </head>
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
 <body>
     <div class="login-box">
-      
-        <h1 class="box-title">Ocean View Resort</h1>
+        <h1>Ocean View Resort Login</h1>
 
         <form action="LoginServlet" method="post">
             <label>Username</label>
