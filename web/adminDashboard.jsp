@@ -17,7 +17,8 @@
         <li><a href="reservations.jsp">Add New Reservation</a></li>
         <li><a href="manageUsers.jsp">Manage Users</a></li>
         <li><a href="resetPassword.jsp">Reset Passwords</a></li>
-        <li><a href="logout.jsp">Logout</a></li>
+        <li>  <a href="LogoutServlet">Logout</a> </li>
+</form>
     </ul>
 </body>
 </html>

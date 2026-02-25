@@ -3,7 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     String role = (String) session.getAttribute("role");
-    if(role == null || !role.equals("RECEPTION")){
+    if(role == null || !role.equals("RECEPTIONIST")){
         response.sendRedirect("login.jsp");
     }
 %>
@@ -15,7 +15,8 @@
     </head>
     <body>
         <h2>Hello Welcome to Reception</h2>
-<a href="reservations.jsp">Add Reservation</a>
-<a href="ViewServlet">View Reservations</a>
+         <a href="reservations.jsp">Add Reservation</a>
+         <a href="ViewServlet">View Reservations</a>
+          <a href="LogoutServlet">Logout</a> 
     </body>
 </html>
