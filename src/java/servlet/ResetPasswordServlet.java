@@ -41,10 +41,10 @@ public class ResetPasswordServlet extends HttpServlet {
             int rows = ps.executeUpdate();
 
             if (rows > 0) {
-                response.getWriter().println("Password Reset Successful");
+                 request.getSession().setAttribute("message", "Password reset successfully!");
             } else {
-                response.getWriter().println("Username not found!");
-            }
+                request.getSession().setAttribute("message", "Error resetting Password.");
+            }response.sendRedirect("manageUsers.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();

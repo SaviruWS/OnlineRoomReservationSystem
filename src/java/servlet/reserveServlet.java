@@ -2,94 +2,99 @@ package servlet;
 
 import dao.DBConnection;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.PreparedStatement;
+import javax.servlet.http.*;
 
-
-@WebServlet(urlPatterns = {"/reserveServlet"})
+@WebServlet("/reserveServlet")
 public class reserveServlet extends HttpServlet {
 
-       protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            
-       // request.setCharacterEncoding("UTF-8");
-        //response.setContentType("text/html;charset=UTF-8");
-        
-        String rno = request.getParameter("rno");
-        String name = request.getParameter("name");
-        int age = Integer.parseInt(request.getParameter("age"));
-        String checkin = request.getParameter("checkin");
-        String checkout = request.getParameter("checkout");
-        
-        java.time.LocalDate checkinD = java.time.LocalDate.parse(checkin);
-        java.sql.Date checkinSD = java.sql.Date.valueOf(checkinD);//sql,jdbc
-        
-        java.time.LocalDate checkoutD = java.time.LocalDate.parse(checkout);
-        java.sql.Date checkoutSD = java.sql.Date.valueOf(checkoutD);//sql,jdbc
-        
-        try (Connection c = DBConnection.getConnection()){
-            PreparedStatement ps = c.prepareStatement("INSERT INTO guests(rno, name, age, checkin, checkout) VALUES (?, ?, ?, ?, ?)");
-            
-            ps.setString (1, rno);
-            ps.setString (2, name);
-            ps.setInt(3, age);
-            
-            ps.setDate (4, checkinSD);
-            ps.setDate (5, checkoutSD);
-            
-            ps.executeUpdate();
-            
+
+        // Set response type
+        response.setContentType("text/html;charset=UTF-8");
+
+        try {
+            // Get parameters from JSP
+            int roomNo = Integer.parseInt(request.getParameter("room_no"));
+            String guestName = request.getParameter("guest_name");
+            String address = request.getParameter("address");
+            String contactNumber = request.getParameter("contact_number");
+            String checkin = request.getParameter("checkin");
+            String checkout = request.getParameter("checkout");
+
+            // Validate mandatory fields
+            if (guestName == null || guestName.isEmpty() || checkin == null || checkout == null
+                    || address == null || contactNumber == null) {
+                response.getWriter().println("Error: All fields are required!");
+                return;
+            }
+
+            // Lookup room_type and price from rooms table
+            String roomType = "";
+            double pricePerDay = 0;
+
+            try (Connection con = DBConnection.getConnection();
+                 PreparedStatement psRoom = con.prepareStatement(
+                         "SELECT room_type, price FROM rooms WHERE room_no = ?")) {
+
+                psRoom.setInt(1, roomNo);
+
+                try (ResultSet rs = psRoom.executeQuery()) {
+                    if (rs.next()) {
+                        roomType = rs.getString("room_type");
+                        pricePerDay = rs.getDouble("price");
+                    } else {
+                        response.getWriter().println("Error: Room number " + roomNo + " not found!");
+                        return;
+                    }
+                }
+
+                // Insert reservation
+                String insertSQL = "INSERT INTO reservations (room_no, guest_name, address, contact_number, room_type, checkin, checkout) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                try (PreparedStatement psInsert = con.prepareStatement(insertSQL)) {
+                    psInsert.setInt(1, roomNo);
+                    psInsert.setString(2, guestName);
+                    psInsert.setString(3, address);
+                    psInsert.setString(4, contactNumber);
+                    psInsert.setString(5, roomType);
+                    psInsert.setDate(6, java.sql.Date.valueOf(checkin));
+                    psInsert.setDate(7, java.sql.Date.valueOf(checkout));
+
+                    psInsert.executeUpdate();
+                }
+
+            }
+
+            // Redirect to view reservations
             response.sendRedirect("ViewServlet");
-        }catch(Exception e){
+
+        } catch (NumberFormatException e) {
+            response.getWriter().println("Invalid room number. Please enter a valid number.");
+        } catch (SQLException e) {
             e.printStackTrace();
-        
+            response.getWriter().println("Database error: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.getWriter().println("Unexpected error: " + e.getMessage());
         }
-        
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

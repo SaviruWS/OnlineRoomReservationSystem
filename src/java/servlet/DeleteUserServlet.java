@@ -40,10 +40,10 @@ public class DeleteUserServlet extends HttpServlet {
 
             int rows = ps.executeUpdate();
             if (rows > 0) {
-                response.getWriter().println("User deleted successfully.");
+                 request.getSession().setAttribute("message", "User deleted successfully!");
             } else {
-                response.getWriter().println("Username not found.");
-            }
+             request.getSession().setAttribute("message", "Error deleting user.");
+            }response.sendRedirect("manageUsers.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();

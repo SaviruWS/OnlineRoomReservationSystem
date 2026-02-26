@@ -18,5 +18,6 @@
       <a href="reservations.jsp">Add Reservation</a>
       <a href="ViewServlet">View Reservations</a>
       <a href="LogoutServlet">Logout</a> 
+     
     </body>
 </html>

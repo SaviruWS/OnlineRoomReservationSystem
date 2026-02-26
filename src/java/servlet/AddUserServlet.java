@@ -59,14 +59,15 @@ public class AddUserServlet extends HttpServlet {
 
             int rows = ps.executeUpdate();
             if (rows > 0) {
-                response.getWriter().println("User added successfully.");
+                 request.getSession().setAttribute("message", "User added successfully!");
             } else {
-                response.getWriter().println("Error adding user.");
-            }
+                request.getSession().setAttribute("message", "Error adding user. Possible duplicate username.");
+            }response.sendRedirect("manageUsers.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();
             response.getWriter().println("Error adding user. Please try again.");
         }
+      
     }
 }

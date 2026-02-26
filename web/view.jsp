@@ -2,8 +2,8 @@
 <%@page import="java.util.ArrayList"%>
 
 <%
-    ArrayList<String[]> guestList = 
-        (ArrayList<String[]>) request.getAttribute("guestList");
+    ArrayList<String[]> reservationList = 
+        (ArrayList<String[]>) request.getAttribute("reservationList");
 %>
 
 <!DOCTYPE html>
@@ -17,23 +17,29 @@
 
 <table border="1">
     <tr>
+        <th>Reservation ID</th>
         <th>Room No</th>
-        <th>Name</th>
-        <th>Age</th>
+        <th>Guest Name</th>
+        <th>Address</th>
+        <th>Contact Number</th>
+        <th>Room Type</th>
         <th>Check-in</th>
         <th>Check-out</th>
     </tr>
 
 <%
-    if (guestList != null) {
-        for (String[] row : guestList) {
+    if (reservationList != null) {
+        for (String[] row : reservationList) {
 %>
     <tr>
-        <td><%= row[0] %></td>
-        <td><%= row[1] %></td>
-        <td><%= row[2] %></td>
-        <td><%= row[3] %></td>
-        <td><%= row[4] %></td>
+        <td><%= row[0] %></td>   <!-- res_id -->
+        <td><%= row[1] %></td>   <!-- room_no -->
+        <td><%= row[2] %></td>   <!-- guest_name -->
+        <td><%= row[3] %></td>   <!-- address -->
+        <td><%= row[4] %></td>   <!-- contact_number -->
+        <td><%= row[5] %></td>   <!-- room_type -->
+        <td><%= row[6] %></td>   <!-- checkin -->
+        <td><%= row[7] %></td>   <!-- checkout -->
     </tr>
 <%
         }
@@ -43,7 +49,13 @@
 </table>
 
 <br>
-<a href="receptionDashboard.jsp">Back</a>
+<button type="button" onclick="goBack()">Back</button>
+
+<script>
+    function goBack() {
+        history.back();
+    }
+</script>
 
 </body>
 </html>

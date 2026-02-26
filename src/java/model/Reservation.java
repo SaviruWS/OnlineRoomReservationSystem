@@ -1,41 +1,42 @@
-
 package model;
 
 import java.sql.Date;
 
 public class Reservation {
-    
-    private String rno;
-    private String name;
-    private int age;
-    private Date checkin;
-    private Date checkout;
-    
-    
-    public Reservation(String rno, String name, int age, Date checkin, Date checkout){
-        
-       this. rno = rno;
-       this. name = name;
-       this. age = age;
-       this.checkin = checkin;
-       this. checkout = checkout;
-       
+
+    private int resId;          // res_id
+    private int roomNo;         // room_no
+    private String guestName;   // guest_name
+    private Date checkin;       // checkin
+    private Date checkout;      // checkout
+
+    public Reservation(int resId, int roomNo, String guestName, Date checkin, Date checkout) {
+        this.resId = resId;
+        this.roomNo = roomNo;
+        this.guestName = guestName;
+        this.checkin = checkin;
+        this.checkout = checkout;
     }
-    public String getRno(){
-        return rno;
+
+    // Getters
+    public int getResId() {
+        return resId;
     }
-    public String getName(){
-        return name;
+
+    public int getRoomNo() {
+        return roomNo;
     }
-    public int getAge(){
-        return age;
+
+    public String getGuestName() {
+        return guestName;
     }
-    public Date getCheckin(){
+
+    public Date getCheckin() {
         return checkin;
     }
-    public Date getCheckout(){
+
+    public Date getCheckout() {
         return checkout;
     }
- 
-    
+
 }

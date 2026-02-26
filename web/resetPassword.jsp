@@ -17,5 +17,13 @@
     New Password: <input type="password" name="newpass" required>
     <input type="submit" value="Reset Password">
 </form>
+        
+        <button type="button" onclick="goBack()">Back</button>
+
+        <script>
+            function goBack() {
+             history.back();
+     }
+         </script>
     </body>
 </html>

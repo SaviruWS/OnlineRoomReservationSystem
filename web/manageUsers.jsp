@@ -18,6 +18,18 @@
     </style>
 </head>
 <body>
+    <%
+    String message = (String) session.getAttribute("message");
+    if (message != null) {
+%>
+    <script type="text/javascript">
+        alert("<%= message %>");
+        window.location = "manageUsers.jsp"; // reload page after popup
+    </script>
+<%
+        session.removeAttribute("message"); // clear message after showing
+    }
+%>
 
 <%
     // Only admin can access
@@ -93,6 +105,13 @@
     }
 %>
 </table>
+<button type="button" onclick="goBack()">Back</button>
+
+<script>
+function goBack() {
+    history.back();
+}
+</script>
 
 </body>
 </html>
