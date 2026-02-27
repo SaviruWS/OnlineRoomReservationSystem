@@ -19,8 +19,13 @@
          <a href="ViewServlet">View Reservations</a>
           <a href="LogoutServlet">Logout</a> 
           <a href="ViewRoomsServlet">View Rooms</a> 
+          <a href="help.jsp">Help</a><br>
           <button type="button" onclick="goBack()">Back</button>
 
-
+        <form action="ReservationDetailsServlet" method="get">
+    Enter Reservation ID:
+    <input type="number" name="res_id" required>
+    <input type="submit" value="View Details">
+</form>
     </body>
 </html>

@@ -2,8 +2,8 @@
 <%@page import="java.util.ArrayList"%>
 
 <%
-    ArrayList<String[]> roomList = 
-        (ArrayList<String[]>) request.getAttribute("roomList");
+    ArrayList<String[]> roomList =
+            (ArrayList<String[]>) request.getAttribute("roomList");
 %>
 
 <!DOCTYPE html>
@@ -11,29 +11,57 @@
 <head>
     <title>View Rooms</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
         table {
             border-collapse: collapse;
-            width: 70%;
+            width: 80%;
+            margin: 20px auto;
         }
         th, td {
-            border: 1px solid black;
-            padding: 8px;
+            border: 1px solid #333;
+            padding: 10px;
             text-align: center;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #444;
+            color: white;
         }
         .booked {
-            background-color: #ffcccc; /* light red for booked rooms */
+            background-color: #ffcccc;
         }
         .available {
-            background-color: #ccffcc; /* light green for available rooms */
+            background-color: #ccffcc;
+        }
+        .no-data {
+            text-align: center;
+            margin-top: 20px;
+            color: red;
+        }
+        .btn {
+            padding: 8px 15px;
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #222;
+        }
+        .center {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-<h2>Rooms Table</h2>
+<h2 style="text-align:center;">Rooms Table</h2>
+
+<%
+    if (roomList != null && !roomList.isEmpty()) {
+%>
 
 <table>
     <tr>
@@ -44,7 +72,6 @@
     </tr>
 
 <%
-    if (roomList != null) {
         for (String[] row : roomList) {
             String statusClass = "available";
             if ("Booked".equalsIgnoreCase(row[3])) {
@@ -54,18 +81,27 @@
     <tr class="<%= statusClass %>">
         <td><%= row[0] %></td>
         <td><%= row[1] %></td>
-        <td><%= row[2] %></td>
+        <td>$<%= row[2] %></td>
         <td><%= row[3] %></td>
     </tr>
 <%
         }
+%>
+</table>
+
+<%
+    } else {
+%>
+    <div class="no-data">
+        No rooms found in the system.
+    </div>
+<%
     }
 %>
 
-</table>
-
-<br>
-<button type="button" onclick="history.back()">Back</button>
+<div class="center">
+    <button class="btn" onclick="history.back()">Back</button>
+</div>
 
 </body>
 </html>
