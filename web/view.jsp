@@ -1,145 +1,189 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
-
-<%
-    ArrayList<String[]> reservationList =
-        (ArrayList<String[]>) request.getAttribute("reservationList");
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>View Reservations</title>
+    <title>View Reservations - Ocean View Resort</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI';
+            background: #1a1a2e;
+            color: white;
+            margin: 0;
+        }
+
+        header {
+            background: linear-gradient(90deg,#162447,#1f4068);
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            color: #e43f5a;
+            font-weight: bold;
         }
 
         table {
+            width: 90%;
+            margin: 40px auto;
             border-collapse: collapse;
-            width: 95%;
-            margin: auto;
+            background-color: #162447;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
         th, td {
-            border: 1px solid black;
-            padding: 8px;
+            padding: 12px;
             text-align: center;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #e43f5a;
         }
 
-        .action-btn {
-            padding: 5px 10px;
-            margin: 2px;
-            cursor: pointer;
+        tr:nth-child(even) {
+            background-color: #1f4068;
+        }
+
+        tr:hover {
+            background-color: #903749;
+        }
+
+        button {
+            padding: 8px 15px;
+            border-radius: 6px;
             border: none;
-            border-radius: 4px;
-        }
-
-        .update-btn {
-            background-color: #4CAF50;
+            background: #e43f5a;
             color: white;
+            cursor: pointer;
         }
 
-        .delete-btn {
-            background-color: #f44336;
-            color: white;
+        button:hover {
+            background: #ef233c;
         }
 
-        .bill-btn {
-            background-color: #2196F3;
-            color: white;
-        }
-
-        h2 {
+        footer {
             text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            background: #162447;
+            color: #e43f5a;
         }
 
-        .back-btn {
-            margin-left: 40px;
-            padding: 6px 12px;
+        /* ===== Popup Style ===== */
+
+        .popup {
+            position: fixed;
+            top: 20px;
+            right: -400px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            transition: right 0.5s ease;
+            z-index: 9999;
+        }
+
+        .popup.show {
+            right: 20px;
+        }
+
+        .success {
+            background: #2ecc71;
+        }
+
+        .error {
+            background: #e74c3c;
         }
     </style>
 </head>
 <body>
 
-<h2>Reservation Details</h2>
+<header>All Reservations</header>
 
 <table>
-    <tr>
-        <th>Reservation ID</th>
-        <th>Room No</th>
-        <th>Guest Name</th>
-        <th>Address</th>
-        <th>Contact Number</th>
-        <th>Room Type</th>
-        <th>Check-in</th>
-        <th>Check-out</th>
-        <th>Actions</th>
-    </tr>
+<tr>
+    <th>ID</th>
+    <th>Room No</th>
+    <th>Guest Name</th>
+    <th>Address</th>
+    <th>Contact</th>
+    <th>Room Type</th>
+    <th>Check-in</th>
+    <th>Check-out</th>
+</tr>
+
 
 <%
-    if (reservationList != null && !reservationList.isEmpty()) {
-        for (String[] row : reservationList) {
+ArrayList<String[]> list = (ArrayList<String[]>) request.getAttribute("reservationList");
+if(list != null){
+    for(String[] row : list){
 %>
-    <tr>
-        <td><%= row[0] %></td>
-        <td><%= row[1] %></td>
-        <td><%= row[2] %></td>
-        <td><%= row[3] %></td>
-        <td><%= row[4] %></td>
-        <td><%= row[5] %></td>
-        <td><%= row[6] %></td>
-        <td><%= row[7] %></td>
-        <td>
-
-            <!-- Update -->
-            <form style="display:inline;" method="get" action="updateReservation.jsp">
-                <input type="hidden" name="res_id" value="<%= row[0] %>">
-                <button type="submit" class="action-btn update-btn">
-                    Update
-                </button>
-            </form>
-
-            <!-- Delete -->
-            <form style="display:inline;" method="post"
-                  action="DeleteReservationServlet"
-                  onsubmit="return confirm('Are you sure you want to delete this reservation?');">
-                <input type="hidden" name="res_id" value="<%= row[0] %>">
-                <button type="submit" class="action-btn delete-btn">
-                    Delete
-                </button>
-            </form>
-
-            <!-- Calculate Bill -->
-            <form style="display:inline;" method="get" action="BillServlet">
-                <input type="hidden" name="res_id" value="<%= row[0] %>">
-                <button type="submit" class="action-btn bill-btn">
-                    Bill
-                </button>
-            </form>
-
-        </td>
-    </tr>
-<%
-        }
-    } else {
-%>
-    <tr>
-        <td colspan="9">No Reservations Found</td>
-    </tr>
+<tr>
+    <td><%= row[0] %></td>
+    <td><%= row[1] %></td>
+    <td><%= row[2] %></td>
+    <td><%= row[3] %></td>
+    <td><%= row[4] %></td>
+    <td><%= row[5] %></td>
+    <td><%= row[6] %></td>
+    <td><%= row[7] %></td>
+</tr>
 <%
     }
+}
 %>
 
 </table>
 
-<br><br>
+<div style="text-align:center;">
+    <button onclick="history.back()">Back</button>
+</div>
 
-<button class="back-btn" onclick="history.back()">Back</button>
 
+
+<!-- ===== POPUP MESSAGE SYSTEM ===== -->
+
+<%
+String successMessage = (String) session.getAttribute("successMessage");
+String errorMessage = (String) session.getAttribute("errorMessage");
+
+if(successMessage != null){
+    session.removeAttribute("successMessage");
+}
+if(errorMessage != null){
+    session.removeAttribute("errorMessage");
+}
+%>
+
+<% if(successMessage != null){ %>
+<div id="successPopup" class="popup success">
+    <%= successMessage %>
+</div>
+<script>
+    var popup = document.getElementById("successPopup");
+    popup.classList.add("show");
+
+    setTimeout(function(){
+        popup.classList.remove("show");
+    }, 3000);
+</script>
+<% } %>
+
+<% if(errorMessage != null){ %>
+<div id="errorPopup" class="popup error">
+    <%= errorMessage %>
+</div>
+<script>
+    var popup = document.getElementById("errorPopup");
+    popup.classList.add("show");
+
+    setTimeout(function(){
+        popup.classList.remove("show");
+    }, 3000);
+</script>
+<% } %>
+<footer>
+    &copy; 2026 Ocean View Resort
+</footer>
 </body>
 </html>

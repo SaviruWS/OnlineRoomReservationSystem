@@ -1,4 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String role = (String) session.getAttribute("role");
+    if(role == null){
+        response.sendRedirect("login.jsp"); // restrict access if not logged in
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,6 +87,7 @@
 
 <div class="container">
 
+    <%-- Common Help for All Roles --%>
     <div class="section">
         <h3>1. Login to the System</h3>
         <ul>
@@ -89,36 +97,52 @@
         </ul>
     </div>
 
+    <% if(role.equals("RECEPTIONIST") || role.equals("ADMIN")) { %>
     <div class="section">
-        <h3>2. Add New Reservation</h3>
-        <ul>
-            <li>Click "Add Reservation" from the dashboard.</li>
-            <li>Fill in guest details including name, address and contact number.</li>
-            <li>Click "View Rooms" before selecting a room number.</li>
-            <li>Select a room that matches the required room type.</li>
-            <li>Enter valid check-in and check-out dates.</li>
-            <li>Click submit to save the reservation.</li>
-            <li>Click submit to save the reservation.</li>
-        </ul>
+     
+        
+        
+       <div class="section"> 
+           <h3>2. Add New Reservation</h3> 
+           <ul> <li>Click "Add Reservation" from the dashboard.</li>
+               <li>Fill in guest details including name, address and contact number.</li>
+               <li>Click "View Rooms" before selecting a room number.</li>
+               <li>Select a room that matches the required room type.</li>
+               <li>Enter valid check-in and check-out dates.</li> 
+               <li>Click submit to save the reservation.</li>
+               <li>Click submit to save the reservation.</li>
     </div>
-
-    <div class="section">
+        
+        <div class="section"> 
         <h3>3. View and Manage Reservations</h3>
-        <ul>
-            <li>Update reservations when necessary.</li>
-            <li>Delete incorrect bookings carefully.</li>
-            <li>The system prevents booking conflicts.</li>
-        </ul>
-    </div>
+        <ul> <li>Update reservations when necessary.</li>
+        <li>Delete incorrect bookings carefully.</li>
+        <li>The system prevents booking conflicts.</li> 
+        </ul> </div>
+        <div class="section">
+        <h3>3. Search Reservations and guest records</h3> 
+       <ul> <li>Search a reservation by reservation id or guest name</li>
+       <li>Update reservations when necessary.</li>
+       <li>Delete incorrect bookings carefully.</li>
+       </ul> </div>
+       <div class="section">
+       <h3>4. Calculate and Print Bill</h3>
+       <ul> <li>Click the "Bill" button next to a reservation.</li>
+       <li>Total cost is calculated using number of nights × room rate.</li>
+       <li>Print the bill for the guest if required.</li> 
+       </ul> </div>
+    <% } %>
 
+    <% if(role.equals("MANAGER") || role.equals("ADMIN")) { %>
     <div class="section">
-        <h3>4. Calculate and Print Bill</h3>
+        <h3>3. Manager Help</h3>
         <ul>
-            <li>Click the "Bill" button next to a reservation.</li>
-            <li>Total cost is calculated using number of nights × room rate.</li>
-            <li>Print the bill for the guest if required.</li>
+            <li>View reservation reports and total revenue.</li>
+            <li>View all reservations.</li>
+          
         </ul>
     </div>
+    <% } %>
 
     <button class="back-btn" onclick="history.back()">Back to Dashboard</button>
 

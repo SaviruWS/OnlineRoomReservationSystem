@@ -6,42 +6,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>View Reservations</title>
+    <title>View Reservations - Ocean View Resort</title>
     <style>
-        table { width: 90%; border-collapse: collapse; margin: 20px auto; font-family: 'Segoe UI', sans-serif; }
-        th, td { border: 1px solid #555; padding: 8px; text-align: center; }
-        th { background-color: #34495e; color: white; }
-        tr:nth-child(even) { background-color: #f2f2f2; }
-        tr:hover { background-color: #dfe6e9; }
-        .action-btn { padding: 5px 10px; margin: 2px; cursor: pointer; border: none; border-radius: 4px; }
-        .update-btn { background-color: #fdcb6e; color: #2d3436; }
-        .delete-btn { background-color: #d63031; color: white; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #1a1a2e;
+            margin: 0;
+            color: white;
+        }
+
+        header {
+            background: linear-gradient(90deg,#162447,#1f4068);
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #e43f5a;
+        }
+
+        table {
+            width: 95%;
+            margin: 40px auto;
+            border-collapse: collapse;
+            background: #162447;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: #e43f5a;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #1f4068;
+        }
+
+        tr:hover {
+            background: #903749;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .update-btn {
+            background: #f4a261;
+            color: black;
+        }
+
+        .update-btn:hover {
+            background: #e9c46a;
+        }
+
+        .delete-btn {
+            background: #ef233c;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #d90429;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: #e43f5a;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: #ef233c;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            background: #162447;
+            color: #e43f5a;
+        }
     </style>
 </head>
 <body>
-<h2 style="text-align:center;">Reservation Details</h2>
+
+<header>Reservation Details</header>
 
 <%
 if (reservationList == null || reservationList.isEmpty()) {
 %>
-<p style="text-align:center; color:red;">No reservation details to display.</p>
+<p style="text-align:center; color:#ef233c; font-weight:bold;">No reservation details to display.</p>
 <%
 } else {
 %>
+
 <table>
-    <tr>
-        <th>Reservation ID</th>
-        <th>Room No</th>
-        <th>Guest Name</th>
-        <th>Address</th>
-        <th>Contact Number</th>
-        <th>Room Type</th>
-        <th>Check-in</th>
-        <th>Check-out</th>
-        <th>Actions</th>
-    </tr>
+<tr>
+    <th>ID</th>
+    <th>Room</th>
+    <th>Guest</th>
+    <th>Address</th>
+    <th>Contact</th>
+    <th>Type</th>
+    <th>Check-in</th>
+    <th>Check-out</th>
+    <th>Actions</th>
+</tr>
+
 <%
-    for (String[] row : reservationList) {
+for (String[] row : reservationList) {
 %>
 <tr>
     <td><%= row[0] %></td>
@@ -52,25 +138,46 @@ if (reservationList == null || reservationList.isEmpty()) {
     <td><%= row[5] %></td>
     <td><%= row[6] %></td>
     <td><%= row[7] %></td>
-    <td>
-        <form style="display:inline;" method="get" action="updateReservation.jsp">
-            <input type="hidden" name="res_id" value="<%= row[0] %>">
-            <button type="submit" class="action-btn update-btn">Update</button>
-        </form>
-        <form style="display:inline;" method="post" action="DeleteReservationServlet" onsubmit="return confirm('Are you sure?');">
-            <input type="hidden" name="res_id" value="<%= row[0] %>">
-            <button type="submit" class="action-btn delete-btn">Delete</button>
-        </form>
-    </td>
+<td>
+
+    <!-- Update -->
+    <form style="display:inline;" method="get" action="updateReservation.jsp">
+        <input type="hidden" name="res_id" value="<%= row[0] %>">
+        <button type="submit" class="action-btn update-btn">Update</button>
+    </form>
+
+    <!-- Delete -->
+    <form style="display:inline;" method="post" action="DeleteReservationServlet"
+          onsubmit="return confirm('Are you sure you want to delete this reservation?');">
+        <input type="hidden" name="res_id" value="<%= row[0] %>">
+        <button type="submit" class="action-btn delete-btn">Delete</button>
+    </form>
+
+    <!-- Calculate Bill -->
+    <form style="display:inline;" method="get" action="BillServlet">
+        <input type="hidden" name="res_id" value="<%= row[0] %>">
+        <button type="submit" class="action-btn" 
+                style="background:#2ecc71;color:white;">Calculate Bill</button>
+    </form>
+
+</td>
 </tr>
 <%
-    }
+}
 %>
 </table>
 <%
 }
 %>
-<br>
-<div style="text-align:center;"><button onclick="history.back()">Back to Dashboard</button></div>
+
+<div style="text-align:center;">
+    <button class="back-btn" onclick="history.back()">Back to Dashboard</button>
+</div>
+
+
+<footer>
+    &copy; 2026 Ocean View Resort
+</footer>
 </body>
+
 </html>

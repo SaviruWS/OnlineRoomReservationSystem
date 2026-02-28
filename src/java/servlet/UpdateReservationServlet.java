@@ -13,8 +13,6 @@ public class UpdateReservationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
-
         try (Connection con = DBConnection.getConnection()) {
 
             int resId = Integer.parseInt(request.getParameter("res_id"));
@@ -46,19 +44,19 @@ public class UpdateReservationServlet extends HttpServlet {
                 psRes.executeUpdate();
             }
 
-            // Success redirect
+            // ✅ SUCCESS MESSAGE (Using Session)
+            HttpSession session = request.getSession();
+            session.setAttribute("successMessage", "Reservation updated successfully!");
+
             response.sendRedirect("ViewServlet");
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().println("Error updating reservation: " + e.getMessage());
-        }
-    }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Redirect GET to POST or show error
-        response.getWriter().println("Use POST to update reservation.");
+            HttpSession session = request.getSession();
+            session.setAttribute("errorMessage", "Error updating reservation!");
+
+            response.sendRedirect("ViewServlet");
+        }
     }
 }

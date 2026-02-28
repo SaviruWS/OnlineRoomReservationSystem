@@ -2,121 +2,110 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hotel Bill</title>
+    <title>Hotel Bill - Ocean View Resort</title>
     <style>
-/* General page styling */
-body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
-    color: #023e8a;
-    margin: 20px;
-}
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #1a1a2e;
+            color: white;
+            margin: 0;
+        }
 
-/* Headings */
-h1, h2 {
-    color: #0077b6;
-    text-align: center;
-}
+        header {
+            background: linear-gradient(90deg,#162447,#1f4068);
+            padding: 20px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #e43f5a;
+        }
 
-/* Tables */
-table {
-    width: 90%;
-    border-collapse: collapse;
-    margin: 20px auto;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+        .bill-container {
+            width: 50%;
+            margin: 50px auto;
+            background: #162447;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
 
-th, td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #0077b6;
-}
+        .bill-container p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
 
-th {
-    background-color: #0077b6;
-    color: white;
-}
+        hr {
+            border: 1px solid #e43f5a;
+            margin: 20px 0;
+        }
 
-tr:nth-child(even) {
-    background-color: #e0f7fa;
-}
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2ecc71;
+        }
 
-tr.booked {
-    background-color: #ef233c; /* red for booked */
-    color: white;
-}
+        button {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
 
-tr.available {
-    background-color: #00b894; /* green for available */
-    color: white;
-}
+        .print-btn {
+            background: #2ecc71;
+            color: white;
+        }
 
-/* Buttons */
-button, input[type="submit"] {
-    padding: 8px 15px;
-    margin: 3px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
+        .print-btn:hover {
+            background: #27ae60;
+        }
 
-button.primary, input.primary {
-    background-color: #0077b6;
-    color: white;
-}
+        .back-btn {
+            background: #e43f5a;
+            color: white;
+        }
 
-button.secondary, input.secondary {
-    background-color: #90e0ef;
-    color: #023e8a;
-}
+        .back-btn:hover {
+            background: #ef233c;
+        }
 
-button.delete {
-    background-color: #ef233c;
-    color: white;
-}
-
-button.update {
-    background-color: #ffb703;
-    color: #023e8a;
-}
-
-/* Form styling */
-form {
-    background-color: #90e0ef;
-    padding: 20px;
-    border-radius: 8px;
-    width: 50%;
-    margin: 20px auto;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-input[type="text"], input[type="number"], input[type="date"] {
-    width: 90%;
-    padding: 8px;
-    margin: 5px 0 15px 0;
-    border-radius: 5px;
-    border: 1px solid #0077b6;
-}
-</style>
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            background: #162447;
+            color: #e43f5a;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Hotel Bill</h2>
+<header>Hotel Bill</header>
 
-Guest Name: ${guestName} <br><br>
-Room Number: ${roomNo} <br><br>
-Check-in Date: ${checkin} <br><br>
-Check-out Date: ${checkout} <br><br>
-Number of Nights: ${nights} <br><br>
-Room Price (per night): Rs.${price} <br><br>
+<div class="bill-container">
 
-<hr>
+    <p><strong>Guest Name:</strong> ${guestName}</p>
+    <p><strong>Room Number:</strong> ${roomNo}</p>
+    <p><strong>Check-in Date:</strong> ${checkin}</p>
+    <p><strong>Check-out Date:</strong> ${checkout}</p>
+    <p><strong>Number of Nights:</strong> ${nights}</p>
+    <p><strong>Room Price (per night):</strong> Rs. ${price}</p>
 
-<h3>Total Amount: Rs.${total}</h3>
+    <hr>
 
-<br>
-<button onclick="window.print()">Print Bill</button>
+    <p class="total">Total Amount: Rs. ${total}</p>
+
+    <button class="print-btn" onclick="window.print()">Print Bill</button>
+    <button class="back-btn" onclick="history.back()">Back</button>
+
+</div>
+
+<footer>
+    &copy; 2026 Ocean View Resort
+</footer>
 
 </body>
 </html>

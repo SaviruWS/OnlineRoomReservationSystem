@@ -47,6 +47,8 @@ public class DeleteReservationServlet extends HttpServlet {
 
             con.commit();
             response.getWriter().println("Reservation deleted successfully!");
+            
+             response.sendRedirect("ViewServlet");
 
         } catch (Exception e) {
             e.printStackTrace();
