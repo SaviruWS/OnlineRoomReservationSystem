@@ -2,120 +2,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Help - Ocean View Resort System</title>
+    <title>Help - Ocean View Resort</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #f8f8f2;
+            margin: 0;
+            padding: 0;
         }
 
-        h1 {
+        header {
+            background: linear-gradient(90deg, #162447, #1f4068);
+            padding: 25px 0;
             text-align: center;
-            color: #2c3e50;
+            font-size: 32px;
+            font-weight: bold;
+            color: #e43f5a;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            width: 85%;
+            margin: 50px auto;
         }
 
         .section {
-            background: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+            background-color: #162447;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
 
         h3 {
-            color: #2980b9;
+            color: #e43f5a;
+            margin-bottom: 15px;
         }
 
         ul {
-            margin-top: 10px;
+            padding-left: 20px;
         }
 
         li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .back-btn {
-            padding: 8px 15px;
-            background-color: #3498db;
-            color: white;
+            display: block;
+            width: 250px;
+            margin: 40px auto;
+            padding: 12px;
+            background: linear-gradient(45deg, #e43f5a, #903749);
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
             cursor: pointer;
+            text-align: center;
         }
 
         .back-btn:hover {
-            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: #162447;
+            color: #e43f5a;
         }
     </style>
 </head>
 <body>
 
-<h1>Ocean View Resort - System Help Guide</h1>
+<header>Ocean View Resort - System Help Guide</header>
 
-<div class="section">
-    <h3>1. Login to the System</h3>
-    <ul>
-        <li>Enter your assigned username and password.</li>
-        <li>If login fails, check credentials carefully.</li>
-        <li>Only authorized staff members can access the system.</li>
-    </ul>
+<div class="container">
+
+    <div class="section">
+        <h3>1. Login to the System</h3>
+        <ul>
+            <li>Enter your assigned username and password.</li>
+            <li>If login fails, verify credentials carefully.</li>
+            <li>Only authorized staff can access the system.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h3>2. Add New Reservation</h3>
+        <ul>
+            <li>Click "Add Reservation" from the dashboard.</li>
+            <li>Fill in guest details including name, address and contact number.</li>
+            <li>Click "View Rooms" before selecting a room number.</li>
+            <li>Select a room that matches the required room type.</li>
+            <li>Enter valid check-in and check-out dates.</li>
+            <li>Click submit to save the reservation.</li>
+            <li>Click submit to save the reservation.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h3>3. View and Manage Reservations</h3>
+        <ul>
+            <li>Update reservations when necessary.</li>
+            <li>Delete incorrect bookings carefully.</li>
+            <li>The system prevents booking conflicts.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h3>4. Calculate and Print Bill</h3>
+        <ul>
+            <li>Click the "Bill" button next to a reservation.</li>
+            <li>Total cost is calculated using number of nights × room rate.</li>
+            <li>Print the bill for the guest if required.</li>
+        </ul>
+    </div>
+
+    <button class="back-btn" onclick="history.back()">Back to Dashboard</button>
+
 </div>
 
-<div class="section">
-    <h3>2. Add New Reservation</h3>
-    <ul>
-        <li>Click on "Add Reservation" from the dashboard.</li>
-        <li>Fill in guest details including name, address and contact number.</li>
-        <li>Before entering a new reservation, please click “View Rooms” to check the available rooms and their types.
-Then, select a Room Number that matches the desired Room Type for the guest.</li>
-        <li>Enter check-in and check-out dates.</li>
-        <li>Click submit to save the reservation.</li>
-        <li>The system automatically generates a unique reservation number.</li>
-    </ul>
-</div>
-
-<div class="section">
-    <h3>3. View and Manage Reservations</h3>
-    <ul>
-        <li>Click "View Reservations" to see all bookings.</li>
-        <li>Use the Update button to modify reservation details.</li>
-        <li>Use the Delete button to remove a reservation.</li>
-        <li>The system prevents booking conflicts and invalid entries.</li>
-    </ul>
-</div>
-
-<div class="section">
-    <h3>4. Calculate and Print Bill</h3>
-    <ul>
-        <li>Click the "Bill" button next to a reservation.</li>
-        <li>The system calculates total stay cost based on number of nights.</li>
-        <li>Room rate is multiplied by total nights.</li>
-        <li>Click "Print" to generate a hard copy for the guest.</li>
-    </ul>
-</div>
-
-<div class="section">
-    <h3>5. Logout / Exit System</h3>
-    <ul>
-        <li>Click the Logout button to safely exit the system.</li>
-        <li>This ensures secure session termination.</li>
-        <li>Always logout after completing your work.</li>
-    </ul>
-</div>
-
-<div class="section">
-    <h3>System Notes & Guidelines</h3>
-    <ul>
-        <li>All required fields must be filled before submission.</li>
-        <li>Dates must be valid and check-out date must be after check-in date.</li>
-        <li>Reservation numbers are unique and auto-generated.</li>
-        <li>Only authorized staff should access this system.</li>
-    </ul>
-</div>
-
-<br>
-<button class="back-btn" onclick="history.back()">Back to Dashboard</button>
+<footer>
+    &copy; 2026 Ocean View Resort. All Rights Reserved.
+</footer>
 
 </body>
 </html>

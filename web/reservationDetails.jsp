@@ -1,57 +1,76 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.*"%>
-
+<%@page import="java.util.ArrayList"%>
 <%
-    String[] reservationDetails = (String[]) request.getAttribute("reservationDetails");
+    ArrayList<String[]> reservationList = (ArrayList<String[]>) request.getAttribute("reservationList");
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reservation Details</title>
+    <title>View Reservations</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 60%;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-            width: 200px;
-        }
+        table { width: 90%; border-collapse: collapse; margin: 20px auto; font-family: 'Segoe UI', sans-serif; }
+        th, td { border: 1px solid #555; padding: 8px; text-align: center; }
+        th { background-color: #34495e; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        tr:hover { background-color: #dfe6e9; }
+        .action-btn { padding: 5px 10px; margin: 2px; cursor: pointer; border: none; border-radius: 4px; }
+        .update-btn { background-color: #fdcb6e; color: #2d3436; }
+        .delete-btn { background-color: #d63031; color: white; }
     </style>
 </head>
 <body>
-
-<h2>Reservation Details</h2>
+<h2 style="text-align:center;">Reservation Details</h2>
 
 <%
-    if (reservationDetails != null) {
+if (reservationList == null || reservationList.isEmpty()) {
+%>
+<p style="text-align:center; color:red;">No reservation details to display.</p>
+<%
+} else {
 %>
 <table>
-    <tr><th>Reservation ID</th><td><%= reservationDetails[0] %></td></tr>
-    <tr><th>Room No</th><td><%= reservationDetails[1] %></td></tr>
-    <tr><th>Guest Name</th><td><%= reservationDetails[2] %></td></tr>
-    <tr><th>Address</th><td><%= reservationDetails[3] %></td></tr>
-    <tr><th>Contact Number</th><td><%= reservationDetails[4] %></td></tr>
-    <tr><th>Room Type</th><td><%= reservationDetails[5] %></td></tr>
-    <tr><th>Check-in Date</th><td><%= reservationDetails[6] %></td></tr>
-    <tr><th>Check-out Date</th><td><%= reservationDetails[7] %></td></tr>
-</table>
+    <tr>
+        <th>Reservation ID</th>
+        <th>Room No</th>
+        <th>Guest Name</th>
+        <th>Address</th>
+        <th>Contact Number</th>
+        <th>Room Type</th>
+        <th>Check-in</th>
+        <th>Check-out</th>
+        <th>Actions</th>
+    </tr>
 <%
-    } else {
+    for (String[] row : reservationList) {
 %>
-<p>No reservation details to display.</p>
+<tr>
+    <td><%= row[0] %></td>
+    <td><%= row[1] %></td>
+    <td><%= row[2] %></td>
+    <td><%= row[3] %></td>
+    <td><%= row[4] %></td>
+    <td><%= row[5] %></td>
+    <td><%= row[6] %></td>
+    <td><%= row[7] %></td>
+    <td>
+        <form style="display:inline;" method="get" action="updateReservation.jsp">
+            <input type="hidden" name="res_id" value="<%= row[0] %>">
+            <button type="submit" class="action-btn update-btn">Update</button>
+        </form>
+        <form style="display:inline;" method="post" action="DeleteReservationServlet" onsubmit="return confirm('Are you sure?');">
+            <input type="hidden" name="res_id" value="<%= row[0] %>">
+            <button type="submit" class="action-btn delete-btn">Delete</button>
+        </form>
+    </td>
+</tr>
 <%
     }
 %>
-
+</table>
+<%
+}
+%>
 <br>
-<button type="button" onclick="history.back()">Back</button>
-
+<div style="text-align:center;"><button onclick="history.back()">Back to Dashboard</button></div>
 </body>
 </html>

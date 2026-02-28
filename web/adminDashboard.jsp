@@ -97,7 +97,7 @@
 </header>
 
 <div class="nav-container">
-    <a href="reservations.jsp">Add New Reservation</a>
+   
     <a href="manageUsers.jsp">Manage Users</a>
     <a href="resetPassword.jsp">Reset Passwords</a>
     <a href="help.jsp">Help</a>

@@ -14,48 +14,70 @@ public class ReservationDetailsServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String resIdStr = request.getParameter("res_id");
+        String guestName = request.getParameter("guest_name");
 
-        if (resIdStr == null || resIdStr.isEmpty()) {
-            response.getWriter().println("Reservation ID is required!");
-            return;
-        }
+        // Trim guest name to avoid whitespace issues
+        if (guestName != null) guestName = guestName.trim();
 
-        try {
-            int resId = Integer.parseInt(resIdStr);
+        try (Connection con = DBConnection.getConnection()) {
 
-            String sql = "SELECT r.res_id, r.room_no, g.guest_name, g.address, "
-                       + "g.contact_number, r.room_type, r.checkin, r.checkout "
-                       + "FROM reservations r "
-                       + "JOIN guests g ON r.guest_id = g.guest_id "
-                       + "WHERE r.res_id = ?";
+            String sql;
+            PreparedStatement ps;
 
-            try (Connection con = DBConnection.getConnection();
-                 PreparedStatement ps = con.prepareStatement(sql)) {
-
+            if (resIdStr != null && !resIdStr.isEmpty()) {
+                // Search by Reservation ID
+                int resId = Integer.parseInt(resIdStr);
+                sql = "SELECT r.res_id, r.room_no, g.guest_name, g.address, "
+                    + "g.contact_number, r.room_type, r.checkin, r.checkout "
+                    + "FROM reservations r "
+                    + "JOIN guests g ON r.guest_id = g.guest_id "
+                    + "WHERE r.res_id = ?";
+                ps = con.prepareStatement(sql);
                 ps.setInt(1, resId);
 
-                try (ResultSet rs = ps.executeQuery()) {
+            } else if (guestName != null && !guestName.isEmpty()) {
+                // Search by Guest Name (partial match)
+                sql = "SELECT r.res_id, r.room_no, g.guest_name, g.address, "
+                    + "g.contact_number, r.room_type, r.checkin, r.checkout "
+                    + "FROM reservations r "
+                    + "JOIN guests g ON r.guest_id = g.guest_id "
+                    + "WHERE g.guest_name LIKE ?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, "%" + guestName + "%");
 
-                    if (rs.next()) {
+            } else {
+                response.getWriter().println("Please enter Reservation ID or Guest Name to search!");
+                return;
+            }
 
-                        String[] reservationDetails = new String[8];
+            try (ResultSet rs = ps.executeQuery()) {
 
-                        reservationDetails[0] = rs.getString("res_id");
-                        reservationDetails[1] = rs.getString("room_no");
-                        reservationDetails[2] = rs.getString("guest_name");
-                        reservationDetails[3] = rs.getString("address");
-                        reservationDetails[4] = rs.getString("contact_number");
-                        reservationDetails[5] = rs.getString("room_type");
-                        reservationDetails[6] = rs.getString("checkin");
-                        reservationDetails[7] = rs.getString("checkout");
+                boolean hasResults = false;
 
-                        request.setAttribute("reservationDetails", reservationDetails);
-                        RequestDispatcher rd = request.getRequestDispatcher("reservationDetails.jsp");
-                        rd.forward(request, response);
+                // Store multiple results if searching by name
+                java.util.ArrayList<String[]> reservationList = new java.util.ArrayList<>();
 
-                    } else {
-                        response.getWriter().println("Reservation not found for ID: " + resId);
-                    }
+                while (rs.next()) {
+                    hasResults = true;
+                    String[] reservationDetails = new String[8];
+                    reservationDetails[0] = rs.getString("res_id");
+                    reservationDetails[1] = rs.getString("room_no");
+                    reservationDetails[2] = rs.getString("guest_name");
+                    reservationDetails[3] = rs.getString("address");
+                    reservationDetails[4] = rs.getString("contact_number");
+                    reservationDetails[5] = rs.getString("room_type");
+                    reservationDetails[6] = rs.getString("checkin");
+                    reservationDetails[7] = rs.getString("checkout");
+
+                    reservationList.add(reservationDetails);
+                }
+
+                if (hasResults) {
+                    request.setAttribute("reservationList", reservationList);
+                    RequestDispatcher rd = request.getRequestDispatcher("reservationDetails.jsp"); // reuse your view page
+                    rd.forward(request, response);
+                } else {
+                    response.getWriter().println("No reservations found matching your search criteria.");
                 }
             }
 
@@ -63,7 +85,7 @@ public class ReservationDetailsServlet extends HttpServlet {
             response.getWriter().println("Invalid Reservation ID format!");
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().println("Error fetching reservation: " + e.getMessage());
+            response.getWriter().println("Error fetching reservations: " + e.getMessage());
         }
     }
 

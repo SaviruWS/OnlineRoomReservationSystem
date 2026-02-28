@@ -1,55 +1,48 @@
-package servlet;
-
-import dao.DBConnection;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.*;
-import java.util.ArrayList;
-import javax.servlet.*;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
 
-@WebServlet("/ViewRoomsServlet")
+@WebServlet("/viewRooms")
 public class ViewRoomsServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(javax.servlet.http.HttpServletRequest request,
+                         javax.servlet.http.HttpServletResponse response)
             throws ServletException, IOException {
 
-        ArrayList<String[]> roomList = new ArrayList<>();
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
 
-        // 🔥 Show Available rooms first, then Booked
-        String sql = "SELECT room_no, room_type, price, status "
-                   + "FROM rooms "
-                   + "ORDER BY status ASC";
+        try {
 
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/reservation",
+                "root",
+                ""
+            );
+
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM rooms WHERE status='Available'");
+
+            out.println("<h2 style='color:white;'>Available Rooms</h2>");
 
             while (rs.next()) {
-                String[] row = new String[4];
-                row[0] = rs.getString("room_no");
-                row[1] = rs.getString("room_type");
-                row[2] = rs.getString("price");
-                row[3] = rs.getString("status");
-
-                roomList.add(row);
+                out.println("<div style='background:#1c1c1c;padding:15px;margin:10px;border-radius:10px;'>");
+                out.println("<p>Room Number: " + rs.getString("room_number") + "</p>");
+                out.println("<p>Type: " + rs.getString("type") + "</p>");
+                out.println("<p>Price: " + rs.getDouble("price") + "</p>");
+                out.println("</div>");
             }
 
-        } catch (SQLException | ClassNotFoundException e) {
+            con.close();
+
+        } catch (Exception e) {
+            out.println("<p style='color:red;'>Error loading rooms</p>");
             e.printStackTrace();
-            request.setAttribute("errorMessage",
-                    "Error loading rooms: " + e.getMessage());
         }
-
-        request.setAttribute("roomList", roomList);
-        RequestDispatcher rd = request.getRequestDispatcher("viewRooms.jsp");
-        rd.forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
     }
 }

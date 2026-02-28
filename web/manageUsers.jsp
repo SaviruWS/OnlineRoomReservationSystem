@@ -220,6 +220,7 @@
                     <input type="submit" class="table-btn delete-btn" value="Delete">
                 </form>
             </td>
+            
         </tr>
         <%
                 }
@@ -228,13 +229,16 @@
                 e.printStackTrace();
             }
         %>
+          
     </table>
 
-    <button class="back-btn" onclick="history.back()">Back</button>
+
 </div>
 
 <footer>
-    &copy; 2026 Ocean View Resort. All Rights Reserved.
+    
+    &copy; 2026 Ocean View Resort. All Rights Reserved.     
+    
 </footer>
 
 </body>
