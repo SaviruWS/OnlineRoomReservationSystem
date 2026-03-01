@@ -19,40 +19,43 @@ public class DeleteReservationServlet extends HttpServlet {
         try (Connection con = DBConnection.getConnection()) {
             con.setAutoCommit(false);
 
-            // 1. Get the room number of this reservation
             int roomNo = 0;
-            try (PreparedStatement psSelect = con.prepareStatement("SELECT room_no FROM reservations WHERE res_id = ?")) {
+            try (PreparedStatement psSelect = con.prepareStatement(
+                    "SELECT room_no FROM reservations WHERE res_id = ?")) {
                 psSelect.setInt(1, resId);
                 try (ResultSet rs = psSelect.executeQuery()) {
                     if (rs.next()) {
                         roomNo = rs.getInt("room_no");
                     } else {
-                        response.getWriter().println("Reservation not found!");
+                        response.getWriter().write("Reservation not found!");
                         return;
                     }
                 }
             }
 
-            // 2. Delete reservation
-            try (PreparedStatement psDelete = con.prepareStatement("DELETE FROM reservations WHERE res_id = ?")) {
+            try (PreparedStatement psDelete = con.prepareStatement(
+                    "DELETE FROM reservations WHERE res_id = ?")) {
                 psDelete.setInt(1, resId);
-                psDelete.executeUpdate();
+                int deleted = psDelete.executeUpdate();
+                if (deleted == 0) {
+                    response.getWriter().write("Reservation could not be deleted!");
+                    return;
+                }
             }
 
-            // 3. Update room status to Available
-            try (PreparedStatement psUpdateRoom = con.prepareStatement("UPDATE rooms SET status = 'Available' WHERE room_no = ?")) {
+            try (PreparedStatement psUpdateRoom = con.prepareStatement(
+                    "UPDATE rooms SET status = 'Available' WHERE room_no = ?")) {
                 psUpdateRoom.setInt(1, roomNo);
                 psUpdateRoom.executeUpdate();
             }
 
             con.commit();
-            response.getWriter().println("Reservation deleted successfully!");
-            
-             response.sendRedirect("ViewServlet");
 
+            // ✅ Send success message immediately
+            response.getWriter().write("Reservation deleted successfully!");
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().println("Error deleting reservation: " + e.getMessage());
+            response.getWriter().write("Error deleting reservation: " + e.getMessage());
         }
     }
 }

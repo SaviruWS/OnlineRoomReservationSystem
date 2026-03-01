@@ -1,16 +1,12 @@
 package servlet;
 
-
 import dao.DBConnection;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 @WebServlet("/ResetPasswordServlet")
 public class ResetPasswordServlet extends HttpServlet {
@@ -19,11 +15,9 @@ public class ResetPasswordServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
-
-        // Only admin can reset passwords
         HttpSession session = request.getSession();
         String role = (String) session.getAttribute("role");
+
         if (role == null || !role.equals("ADMIN")) {
             response.sendRedirect("login.jsp");
             return;
@@ -38,17 +32,24 @@ public class ResetPasswordServlet extends HttpServlet {
 
             ps.setString(1, newpass);
             ps.setString(2, username);
+
             int rows = ps.executeUpdate();
 
             if (rows > 0) {
-                 request.getSession().setAttribute("message", "Password reset successfully!");
+                session.setAttribute("msg", "Password reset successfully!");
+                session.setAttribute("msgType", "success");
             } else {
-                request.getSession().setAttribute("message", "Error resetting Password.");
-            }response.sendRedirect("manageUsers.jsp");
+                session.setAttribute("msg", "Error resetting password.");
+                session.setAttribute("msgType", "error");
+            }
+
+            response.sendRedirect("manageUsers.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().println("Error resetting password.");
+            session.setAttribute("msg", "System error occurred.");
+            session.setAttribute("msgType", "error");
+            response.sendRedirect("manageUsers.jsp");
         }
     }
 }

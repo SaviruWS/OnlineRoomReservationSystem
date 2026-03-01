@@ -1,7 +1,5 @@
 package servlet;
 
-
-
 import dao.DBConnection;
 import java.io.IOException;
 import java.sql.Connection;
@@ -9,10 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 @WebServlet("/AddUserServlet")
 public class AddUserServlet extends HttpServlet {
@@ -21,11 +16,9 @@ public class AddUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
-
-        // Only admin can add users
         HttpSession session = request.getSession();
         String role = (String) session.getAttribute("role");
+
         if (role == null || !role.equals("ADMIN")) {
             response.sendRedirect("login.jsp");
             return;
@@ -37,37 +30,41 @@ public class AddUserServlet extends HttpServlet {
 
         try (Connection c = DBConnection.getConnection()) {
 
-            // 1️⃣ Check if username already exists
             PreparedStatement check = c.prepareStatement(
-                    "SELECT * FROM users WHERE username=?"
-            );
+                    "SELECT id FROM users WHERE username=?");
             check.setString(1, username);
             ResultSet rs = check.executeQuery();
 
             if (rs.next()) {
-                response.getWriter().println("Username already exists!");
-                return; // stop execution
+                session.setAttribute("msg", "Username already exists!");
+                session.setAttribute("msgType", "error");
+                response.sendRedirect("manageUsers.jsp");
+                return;
             }
 
-            // 2️⃣ Insert new user
             PreparedStatement ps = c.prepareStatement(
-                    "INSERT INTO users(username, password, role) VALUES (?, ?, ?)"
-            );
+                    "INSERT INTO users(username,password,role) VALUES (?,?,?)");
             ps.setString(1, username);
             ps.setString(2, password);
             ps.setString(3, userRole);
 
             int rows = ps.executeUpdate();
+
             if (rows > 0) {
-                 request.getSession().setAttribute("message", "User added successfully!");
+                session.setAttribute("msg", "User added successfully!");
+                session.setAttribute("msgType", "success");
             } else {
-                request.getSession().setAttribute("message", "Error adding user. Possible duplicate username.");
-            }response.sendRedirect("manageUsers.jsp");
+                session.setAttribute("msg", "Error adding user.");
+                session.setAttribute("msgType", "error");
+            }
+
+            response.sendRedirect("manageUsers.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().println("Error adding user. Please try again.");
+            session.setAttribute("msg", "System error occurred.");
+            session.setAttribute("msgType", "error");
+            response.sendRedirect("manageUsers.jsp");
         }
-      
     }
 }

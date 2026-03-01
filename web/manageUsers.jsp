@@ -150,19 +150,66 @@
             background-color: #019875;
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #162447;
-            color: #e43f5a;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+          footer {
+          text-align: center;
+          padding: 20px;
+          background-color: #162447;
+          color: #e43f5a;
+          margin-top: 40px;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.success {
+    background: linear-gradient(45deg, #00b894, #019875);
+}
+
+.error {
+    background: linear-gradient(45deg, #ef233c, #d90429);
+}
+
+
     </style>
 </head>
 <body>
+    <%
+    String message = (String) session.getAttribute("msg");
+    String msgType = (String) session.getAttribute("msgType");
+
+    if (message != null) {
+%>
+
+<div id="popup" class="popup <%= msgType %>">
+    <%= message %>
+</div>
+
+<script>
+    const popup = document.getElementById("popup");
+    popup.style.display = "block";
+
+    setTimeout(function () {
+        popup.style.opacity = "0";
+        setTimeout(() => popup.style.display = "none", 500);
+    }, 3000);
+</script>
+
+<%
+        session.removeAttribute("msg");
+        session.removeAttribute("msgType");
+    }
+%>
 
 <header>Ocean View Resort - Manage Users</header>
 
@@ -231,6 +278,12 @@
         %>
           
     </table>
+            </table>
+
+    <!-- Back Button -->
+    <button class="back-btn" onclick="window.location.href='adminDashboard.jsp'">
+        Back to Dashboard
+    </button>
 
 
 </div>
