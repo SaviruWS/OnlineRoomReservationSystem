@@ -6,6 +6,7 @@ import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import utils.EmailUtil;
 
 @WebServlet("/reserveServlet")
 public class reserveServlet extends HttpServlet {
@@ -24,6 +25,7 @@ public class reserveServlet extends HttpServlet {
             String guestName = request.getParameter("guest_name");
             String address = request.getParameter("address");
             String contactNumber = request.getParameter("contact_number");
+            String email = request.getParameter("email");
 
             // --- 2. Get reservation info ---
             int roomNo = Integer.parseInt(request.getParameter("room_no"));
@@ -31,13 +33,14 @@ public class reserveServlet extends HttpServlet {
             String checkout = request.getParameter("checkout");
 
             // --- 3. Insert guest ---
-            String insertGuestSQL = "INSERT INTO guests (guest_name, address, contact_number) VALUES (?, ?, ?)";
+            String insertGuestSQL = "INSERT INTO guests (guest_name, address, contact_number, email) VALUES (?, ?, ?, ?)";
             int guestId = 0;
 
             try (PreparedStatement psGuest = con.prepareStatement(insertGuestSQL, Statement.RETURN_GENERATED_KEYS)) {
                 psGuest.setString(1, guestName);
                 psGuest.setString(2, address);
                 psGuest.setString(3, contactNumber);
+                psGuest.setString(4, email);
                 psGuest.executeUpdate();
 
                 ResultSet rsGuest = psGuest.getGeneratedKeys();
@@ -96,11 +99,33 @@ public class reserveServlet extends HttpServlet {
             // Commit transaction
             con.commit();
 
-            // ✅ Redirect to success page (BEST PRACTICE)
-            response.sendRedirect("ReservationSuccessServlet?res_id=" + resId);
+            // --- SEND EMAIL ---
+            try {
+                String subject = "Reservation Confirmation - Ocean View Resort";
+                String message = "Dear " + guestName + ",\n\n" +
+                        "Your reservation has been confirmed!\n" +
+                        "Reservation ID: " + resId + "\n" +
+                        "Room Number: " + roomNo + "\n" +
+                        "Check-in: " + checkin + "\n" +
+                        "Check-out: " + checkout + "\n\n" +
+                        "Thank you for choosing Ocean View Resort.\n\n" +
+                        "Regards,\nOcean View Resort";
+
+                EmailUtil.sendEmail(email, subject, message);
+                System.out.println("Email sent to: " + email);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // --- Set popup session ---
+            HttpSession session = request.getSession();
+            session.setAttribute("success", "Reservation Successful & Email Sent!");
+
+            // Redirect back to reservations page
+            response.sendRedirect("reservations.jsp");
 
         } catch (Exception e) {
-
             try {
                 if (con != null) {
                     con.rollback(); // rollback if error
@@ -108,7 +133,6 @@ public class reserveServlet extends HttpServlet {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-
             response.sendRedirect("reservations.jsp?error=DatabaseError");
 
         } finally {

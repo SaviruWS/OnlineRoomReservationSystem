@@ -160,6 +160,7 @@
         <a href="reservations.jsp" class="dashboard-link">Add Reservation</a>
         <a href="ViewServlet" class="dashboard-link">View Reservations</a>
         <a href="ViewRoomsServlet" class="dashboard-link">View Rooms</a>
+        <a href="viewGuests" class="dashboard-link">View Guests</a>
     </div>
 
     <!-- Reservation Search Form -->

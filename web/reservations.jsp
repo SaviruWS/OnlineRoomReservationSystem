@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +68,8 @@
 
         input[type="date"],
         input[type="number"],
-        input[type="text"] {
+        input[type="text"],
+        input[type="email"] {
             background-color: #f5f5f5;
             color: #000;
         }
@@ -132,10 +133,53 @@
             margin-top: 10px;
             color: #cccccc;
         }
+
+        /* --- Popup Styling --- */
+        .popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: #28a745;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            z-index: 9999;
+            display: none;
+            font-family: 'Segoe UI', sans-serif;
+            animation: fadein 0.5s, fadeout 0.5s 3.5s;
+        }
+
+        @keyframes fadein {
+            from { opacity: 0; top: 0; }
+            to { opacity: 1; top: 20px; }
+        }
+
+        @keyframes fadeout {
+            from { opacity: 1; top: 20px; }
+            to { opacity: 0; top: 0; }
+        }
+
     </style>
 </head>
 
 <body>
+
+<%
+    String successMsg = (String) session.getAttribute("success");
+    if(successMsg != null){
+        session.removeAttribute("success");
+%>
+<div id="popup" class="popup">
+    <%= successMsg %>
+</div>
+<script>
+    const popup = document.getElementById("popup");
+    popup.style.display = "block";
+    setTimeout(() => popup.style.display = "none", 4000);
+</script>
+<% } %>
 
 <header>
     Ocean View Resort
@@ -158,6 +202,8 @@
         <label>Contact Number</label>
         <input type="text" name="contact_number" required>
 
+        <label>Email</label>
+        <input type="email" name="email" required>
 
         <h3>Reservation Details</h3>
 
