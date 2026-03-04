@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Reservation {
 
@@ -28,6 +29,10 @@ public class Reservation {
         this.roomType = roomType;
         this.checkin = checkin;
         this.checkout = checkout;
+    }
+
+    public Reservation(int aInt, int aInt0, String string, String string0, String string1, int aInt1, LocalDate toLocalDate, LocalDate toLocalDate0) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     // Getters

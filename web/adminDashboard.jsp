@@ -28,12 +28,23 @@
             background-color: #162447;
             color: #ffd700; /* luxury gold accent */
             text-align: center;
-            padding: 50px 0;
+            padding: 20px 0;
             font-size: 42px;
             font-weight: 700;
             letter-spacing: 2px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
+
+header img {
+    height: 120px;         /* bigger logo for visibility */
+    width: auto;           /* maintain aspect ratio */
+    border-radius: 12px;   /* slightly rounded corners */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.6); /* more prominent shadow */
+     }
 
         /* --- Navigation Container --- */
         .nav-container {
@@ -87,17 +98,16 @@
             padding: 40px 0 20px 0;
             font-size: 14px;
         }
-
     </style>
 </head>
 <body>
 
 <header>
+    <img src="<%=request.getContextPath()%>/images/logo.jpg" alt="Logo">
     Ocean View Resort
 </header>
 
 <div class="nav-container">
-   
     <a href="manageUsers.jsp">Manage Users</a>
     <a href="resetPassword.jsp">Reset Passwords</a>
     <a href="help.jsp">Help</a>

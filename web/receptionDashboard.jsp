@@ -22,14 +22,24 @@
         }
 
         header {
-            background: linear-gradient(90deg, #162447, #1f4068);
-            padding: 25px 0;
+            background-color: #162447;
+            color: #ffd700; /* luxury gold accent */
             text-align: center;
-            font-size: 32px;
-            font-weight: bold;
-            color: #e43f5a;
+            padding: 20px 0;
+            font-size: 42px;
+            font-weight: 700;
             letter-spacing: 2px;
-            position: relative;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+         }
+        header img {
+            height: 120px;    
+            width: auto;           
+            border-radius: 12px;   
+            box-shadow: 0 6px 15px rgba(0,0,0,0.6); 
         }
 
         /* Help link top-right */
@@ -148,8 +158,9 @@
 <body>
 
 <header>
+     <img src="<%=request.getContextPath()%>/images/logo.jpg" alt="Logo">
     Ocean View Resort - Reception Dashboard
-    <a href="help.jsp" class="help-link">Help</a>
+   
 </header>
 
 <div class="container">
@@ -161,6 +172,7 @@
         <a href="ViewServlet" class="dashboard-link">View Reservations</a>
         <a href="ViewRoomsServlet" class="dashboard-link">View Rooms</a>
         <a href="viewGuests" class="dashboard-link">View Guests</a>
+         <a href="help.jsp" class="dashboard-link">Help</a>
     </div>
 
     <!-- Reservation Search Form -->

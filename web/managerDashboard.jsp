@@ -24,12 +24,24 @@
         }
 
         header {
-            background: linear-gradient(90deg,#162447,#1f4068);
-            padding: 20px;
+            background-color: #162447;
+            color: #ffd700; /* luxury gold accent */
             text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            color: #e43f5a;
+            padding: 20px 0;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+            header img {
+            height: 120px;    
+            width: auto;           
+            border-radius: 12px;   
+            box-shadow: 0 6px 15px rgba(0,0,0,0.6); 
         }
 
         .content {
@@ -88,6 +100,7 @@
 <body>
 
 <header>
+     <img src="<%=request.getContextPath()%>/images/logo.jpg" alt="Logo">
     Manager Dashboard
 
 </header>
@@ -101,6 +114,10 @@
 
     <div class="dashboard-card">
         <a href="ManagerReportsServlet">View All Reports</a>
+    </div>
+    
+    <div class="dashboard-card">
+    <a href="viewGuests">View Guests</a>
     </div>
     
           <div class="dashboard-card">

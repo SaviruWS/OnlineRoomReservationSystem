@@ -72,7 +72,9 @@
 </head>
 <body>
 
-<a href="receptionDashboard.jsp" class="back-btn">← Back</a>
+<div style="text-align:center;">
+    <button onclick="history.back()">Back</button>
+</div>
 
 <h2>Guest Details</h2>
 

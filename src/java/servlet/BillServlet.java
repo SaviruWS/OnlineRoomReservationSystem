@@ -1,10 +1,10 @@
 package servlet;
 
 import dao.DBConnection;
+import service.BillService;   
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -37,8 +37,10 @@ public class BillServlet extends HttpServlet {
                 LocalDate checkout = rs.getDate("checkout").toLocalDate();
                 double price = rs.getDouble("price");
 
-                long nights = ChronoUnit.DAYS.between(checkin, checkout);
-                double total = nights * price;
+                // ✅ Updated calculation using BillService
+                BillService billService = new BillService();
+                long nights = billService.calculateNights(checkin, checkout);
+                double total = billService.calculateTotal(nights, price);
 
                 request.setAttribute("guestName", guestName);
                 request.setAttribute("roomNo", roomNo);

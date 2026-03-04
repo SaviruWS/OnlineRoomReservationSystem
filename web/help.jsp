@@ -114,19 +114,46 @@
     </div>
         
         <div class="section"> 
-        <h3>3. View and Manage Reservations</h3>
-        <ul> <li>Update reservations when necessary.</li>
-        <li>Delete incorrect bookings carefully.</li>
-        <li>The system prevents booking conflicts.</li> 
-        </ul> </div>
+   <h3>3. View Reservations</h3>
+      <ul>
+    <li>Click "View Reservations" from the dashboard.</li>
+    <li>The system will display a list of all reservations.</li>
+    <li>Check guest name, room number, room type, check-in and check-out dates</li>
+   
+   
+       </ul></div>
+        
         <div class="section">
-        <h3>3. Search Reservations and guest records</h3> 
+        <h3>4. Search Reservations and guest records</h3> 
        <ul> <li>Search a reservation by reservation id or guest name</li>
        <li>Update reservations when necessary.</li>
        <li>Delete incorrect bookings carefully.</li>
        </ul> </div>
+        
+        <div class="section">
+        <h3>5. View Guests</h3>
+    <ul>
+    <li>Click "View Guests" from the dashboard.</li>
+    <li>The system will display a list of all current and past guests.</li>
+    <li>You can see guest details including name, address, contact number,email and reservation info.</li>
+  
+   
+     </ul>
+        </div>
+
+        <div class="section">
+      <h3>6. View Rooms</h3>
+     <ul>
+    <li>Click "View Rooms" from the dashboard.</li>
+    <li>The system will display a list of all rooms in the hotel.</li>
+    <li>Check each room’s availability status: "Booked" or "Available".</li>
+    <li>See the price for each room type and details .</li>
+  
+   
+     </ul></div>
+        
        <div class="section">
-       <h3>4. Calculate and Print Bill</h3>
+       <h3>7. Calculate and Print Bill</h3>
        <ul> <li>Click the "Bill" button next to a reservation.</li>
        <li>Total cost is calculated using number of nights × room rate.</li>
        <li>Print the bill for the guest if required.</li> 

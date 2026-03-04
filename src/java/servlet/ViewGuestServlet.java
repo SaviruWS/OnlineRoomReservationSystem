@@ -5,7 +5,7 @@ import model.Guest;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -24,9 +24,8 @@ public class ViewGuestServlet extends HttpServlet {
         try {
             Connection con = DBConnection.getConnection();
 
-            String sql = "SELECT * FROM guests";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            CallableStatement cs = con.prepareCall("{CALL GetAllGuests()}");
+            ResultSet rs = cs.executeQuery();
 
             while (rs.next()) {
                 Guest guest = new Guest(
