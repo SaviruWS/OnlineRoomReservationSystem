@@ -110,7 +110,7 @@ header img {
 <div class="nav-container">
     <a href="manageUsers.jsp">Manage Users</a>
     <a href="resetPassword.jsp">Reset Passwords</a>
-    <a href="help.jsp">Help</a>
+   
     <a href="LogoutServlet" class="logout-link">Logout</a>
 </div>
 
