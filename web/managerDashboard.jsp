@@ -1,0 +1,136 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String role = (String) session.getAttribute("role");
+    if(role == null || !role.equals("MANAGER")){
+        response.sendRedirect("login.jsp");
+    }
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manager Dashboard - Ocean View Resort</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #1a1a2e;
+            color: white;
+
+            /* IMPORTANT */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #162447;
+            color: #ffd700; /* luxury gold accent */
+            text-align: center;
+            padding: 20px 0;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+            header img {
+            height: 120px;    
+            width: auto;           
+            border-radius: 12px;   
+            box-shadow: 0 6px 15px rgba(0,0,0,0.6); 
+        }
+
+        .content {
+            flex: 1;   /* This pushes footer down */
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .dashboard-card {
+            background: #162447;
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            transition: 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            background: #1f4068;
+        }
+
+        .dashboard-card a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            display: block;
+        }
+
+        .logout-btn {
+            background: #ef233c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        .logout-btn:hover {
+            background: #d90429;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #162447;
+            color: #e43f5a;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+     <img src="<%=request.getContextPath()%>/images/logo.jpg" alt="Logo">
+    Manager Dashboard
+
+</header>
+
+<div class="content">
+
+
+    <div class="dashboard-card">
+        <a href="ViewServlet">View Reservations</a>
+    </div>
+
+    <div class="dashboard-card">
+        <a href="ManagerReportsServlet">View All Reports</a>
+    </div>
+    
+    <div class="dashboard-card">
+    <a href="viewGuests">View Guests</a>
+    </div>
+    
+          <div class="dashboard-card">
+        <a href="help.jsp">Help</a>
+    </div>
+
+    <a href="LogoutServlet" class="logout-btn">Logout</a>
+    
+
+
+<footer>
+    &copy; 2026 Ocean View Resort
+</footer>
+
+</body>
+</html>
