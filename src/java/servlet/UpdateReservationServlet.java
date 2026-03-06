@@ -24,7 +24,7 @@ public class UpdateReservationServlet extends HttpServlet {
             String checkin = request.getParameter("checkin");
             String checkout = request.getParameter("checkout");
 
-            // --- 1. Update guests table ---
+          
             String updateGuestSQL = "UPDATE guests SET guest_name=?, address=?, contact_number=? WHERE guest_id=?";
             try (PreparedStatement psGuest = con.prepareStatement(updateGuestSQL)) {
                 psGuest.setString(1, guestName);
@@ -34,7 +34,7 @@ public class UpdateReservationServlet extends HttpServlet {
                 psGuest.executeUpdate();
             }
 
-            // --- 2. Update reservations table ---
+          
             String updateResSQL = "UPDATE reservations SET room_no=?, checkin=?, checkout=? WHERE res_id=?";
             try (PreparedStatement psRes = con.prepareStatement(updateResSQL)) {
                 psRes.setInt(1, roomNo);
@@ -44,7 +44,7 @@ public class UpdateReservationServlet extends HttpServlet {
                 psRes.executeUpdate();
             }
 
-            // ✅ SUCCESS MESSAGE (Using Session)
+            
             HttpSession session = request.getSession();
             session.setAttribute("successMessage", "Reservation updated successfully!");
 

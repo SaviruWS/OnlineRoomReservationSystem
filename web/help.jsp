@@ -87,7 +87,7 @@
 
 <div class="container">
 
-    <%-- Common Help for All Roles --%>
+   
     <div class="section">
         <h3>1. Login to the System</h3>
         <ul>

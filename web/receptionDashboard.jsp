@@ -23,7 +23,7 @@
 
         header {
             background-color: #162447;
-            color: #ffd700; /* luxury gold accent */
+            color: #ffd700;
             text-align: center;
             padding: 20px 0;
             font-size: 42px;
@@ -42,7 +42,7 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.6); 
         }
 
-        /* Help link top-right */
+      
         a.help-link {
             position: absolute;
             right: 30px;
@@ -68,7 +68,7 @@
             flex: 1;
         }
 
-        /* Dashboard links horizontal line */
+       
         .dashboard-links {
             display: flex;
             justify-content: center;
@@ -91,7 +91,7 @@
             transform: scale(1.1);
         }
 
-        /* Reservation search form */
+        
         .res-form {
             background-color: #162447;
             padding: 30px;
@@ -130,7 +130,7 @@
             transform: scale(1.05);
         }
 
-        /* Logout fixed bottom */
+      
         footer {
             text-align: center;
             padding: 25px;
@@ -166,7 +166,7 @@
 <div class="container">
     <h2>Welcome, Receptionist!</h2>
 
-    <!-- Dashboard Links in a single line -->
+  
     <div class="dashboard-links">
         <a href="reservations.jsp" class="dashboard-link">Add Reservation</a>
         <a href="ViewServlet" class="dashboard-link">View Reservations</a>

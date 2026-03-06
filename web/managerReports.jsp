@@ -104,7 +104,7 @@
 
 <div class="container">
 
-    <!-- Reservation Report Table -->
+  
     <table>
         <tr>
             <th>Room Type</th>

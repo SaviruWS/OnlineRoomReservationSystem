@@ -13,20 +13,20 @@ public class ReservationDAO {
 
         boolean status = false;
 
-        // 1️⃣ Insert reservation
+         
         String insertSQL = "INSERT INTO reservations "
                          + "(room_no, guest_name, address, contact_number, room_type, checkin, checkout) "
                          + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        // 2️⃣ Update room status
+        
         String updateRoomSQL = "UPDATE rooms SET status = 'Booked' WHERE room_no = ?";
 
         try (Connection con = DBConnection.getConnection()) {
 
-            // Start transaction
+            
             con.setAutoCommit(false);
 
-            // Insert reservation
+         
             try (PreparedStatement ps = con.prepareStatement(insertSQL)) {
                 ps.setInt(1, roomNo);
                 ps.setString(2, guestName);

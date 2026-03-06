@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("Password");
 
         loginDAO dao = new loginDAO();
-        String role = dao.validateUser(username, password); // returns ADMIN, RECEPTIONIST, MANAGER, or null
+        String role = dao.validateUser(username, password); 
 
         if (role != null) {
             // Login successful
@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
                     break;
             }
         } else {
-            // Login failed set error message and forward back to login page
+         
             request.setAttribute("errorMessage", "Incorrect username or password");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }

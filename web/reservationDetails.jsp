@@ -34,7 +34,7 @@
 
 <header>Reservation Details</header>
 
-<!-- Popup message -->
+
 <div id="popup" class="popup"></div>
 
 <%
@@ -112,11 +112,11 @@ function deleteReservation(resId) {
     })
     .then(resp => resp.text())
     .then(msg => {
-        // Remove row from table
+       
         const row = document.getElementById('resRow-' + resId);
         if (row) row.remove();
 
-        // Show popup
+   
         showPopup(msg, 'success');
     })
     .catch(err => showPopup('Error deleting reservation!', 'error'));

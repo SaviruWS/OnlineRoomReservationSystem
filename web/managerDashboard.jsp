@@ -17,7 +17,7 @@
             background: #1a1a2e;
             color: white;
 
-            /* IMPORTANT */
+          
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -25,7 +25,7 @@
 
         header {
             background-color: #162447;
-            color: #ffd700; /* luxury gold accent */
+            color: #ffd700; 
             text-align: center;
             padding: 20px 0;
             font-size: 42px;
@@ -45,7 +45,7 @@
         }
 
         .content {
-            flex: 1;   /* This pushes footer down */
+            flex: 1;  
             text-align: center;
             margin-top: 80px;
         }

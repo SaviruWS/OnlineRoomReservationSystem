@@ -51,7 +51,7 @@ public class DeleteReservationServlet extends HttpServlet {
 
             con.commit();
 
-            // ✅ Send success message immediately
+            //  Send success message 
             response.getWriter().write("Reservation deleted successfully!");
         } catch (Exception e) {
             e.printStackTrace();

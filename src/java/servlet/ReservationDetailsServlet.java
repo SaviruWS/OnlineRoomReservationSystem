@@ -16,7 +16,7 @@ public class ReservationDetailsServlet extends HttpServlet {
         String resIdStr = request.getParameter("res_id");
         String guestName = request.getParameter("guest_name");
 
-        // Trim guest name to avoid whitespace issues
+       
         if (guestName != null) guestName = guestName.trim();
 
         try (Connection con = DBConnection.getConnection()) {
@@ -36,7 +36,7 @@ public class ReservationDetailsServlet extends HttpServlet {
                 ps.setInt(1, resId);
 
             } else if (guestName != null && !guestName.isEmpty()) {
-                // Search by Guest Name (partial match)
+                // Search by Guest Name 
                 sql = "SELECT r.res_id, r.room_no, g.guest_name, g.address, "
                     + "g.contact_number, r.room_type, r.checkin, r.checkout "
                     + "FROM reservations r "
@@ -54,7 +54,7 @@ public class ReservationDetailsServlet extends HttpServlet {
 
                 boolean hasResults = false;
 
-                // Store multiple results if searching by name
+               
                 java.util.ArrayList<String[]> reservationList = new java.util.ArrayList<>();
 
                 while (rs.next()) {
@@ -74,7 +74,7 @@ public class ReservationDetailsServlet extends HttpServlet {
 
                 if (hasResults) {
                     request.setAttribute("reservationList", reservationList);
-                    RequestDispatcher rd = request.getRequestDispatcher("reservationDetails.jsp"); // reuse your view page
+                    RequestDispatcher rd = request.getRequestDispatcher("reservationDetails.jsp"); 
                     rd.forward(request, response);
                 } else {
                     response.getWriter().println("No reservations found matching your search criteria.");

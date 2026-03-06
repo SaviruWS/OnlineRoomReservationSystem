@@ -49,7 +49,7 @@ public class ReservationSuccessServlet extends HttpServlet {
                 }
             }
 
-            // Forward to JSP to show reservation success
+        
             request.getRequestDispatcher("reservationSuccess.jsp").forward(request, response);
 
         } catch (Exception e) {

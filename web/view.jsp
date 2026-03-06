@@ -68,7 +68,7 @@
             color: #e43f5a;
         }
 
-        /* ===== Popup Style ===== */
+      
 
         .popup {
             position: fixed;
@@ -141,7 +141,7 @@ if(list != null){
 
 
 
-<!-- ===== POPUP MESSAGE SYSTEM ===== -->
+
 
 <%
 String successMessage = (String) session.getAttribute("successMessage");

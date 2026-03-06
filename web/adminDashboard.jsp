@@ -11,22 +11,22 @@
 <head>
     <title>Admin Dashboard - Ocean View Resort</title>
     <style>
-        /* --- General Page --- */
+       
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            background: #1a1a2e;  /* luxury dark navy background */
+            background: #1a1a2e;  
             color: #e0e0e0;
             display: flex;
             flex-direction: column;
         }
 
-        /* --- Header --- */
+       
         header {
             background-color: #162447;
-            color: #ffd700; /* luxury gold accent */
+            color: #ffd700;
             text-align: center;
             padding: 20px 0;
             font-size: 42px;
@@ -40,13 +40,13 @@
         }
 
 header img {
-    height: 120px;         /* bigger logo for visibility */
-    width: auto;           /* maintain aspect ratio */
-    border-radius: 12px;   /* slightly rounded corners */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.6); /* more prominent shadow */
+    height: 120px;     
+    width: auto;          
+    border-radius: 12px;  
+    box-shadow: 0 6px 15px rgba(0,0,0,0.6); 
      }
 
-        /* --- Navigation Container --- */
+       
         .nav-container {
             display: flex;
             flex-direction: column;
@@ -72,16 +72,16 @@ header img {
             box-shadow: 0 6px 18px rgba(0,0,0,0.4);
         }
 
-        /* --- Hover Effect --- */
+       
         .nav-container a:hover {
             background: linear-gradient(145deg, #3a506b, #2c3e50);
             transform: translateY(-3px) scale(1.03);
             box-shadow: 0 10px 25px rgba(0,0,0,0.6);
         }
 
-        /* --- Logout Button --- */
+       
         .logout-link {
-            background-color: #e43f5a;  /* luxury red */
+            background-color: #e43f5a;  
             color: white !important;
             font-weight: bold;
         }
@@ -90,7 +90,7 @@ header img {
             background-color: #b72a3b;
         }
 
-        /* --- Footer --- */
+        /*Footer */
         footer {
             text-align: center;
             color: #b0b0b0;

@@ -134,7 +134,7 @@
             color: #cccccc;
         }
 
-        /* --- Popup Styling --- */
+       
         .popup {
             position: fixed;
             top: 20px;
@@ -207,7 +207,7 @@
 
         <h3>Reservation Details</h3>
 
-        <!-- View Available Rooms Button -->
+       
         <a href="viewAvailableRooms.jsp" class="btn view-btn">
             View Available Rooms
         </a>

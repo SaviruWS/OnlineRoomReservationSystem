@@ -37,7 +37,7 @@ public class ManagerReportsServlet extends HttpServlet {
 
                 reportList.add(row);
 
-                // For chart
+             
                 roomTypes.add(type);
                 revenues.add(rs.getDouble("total_revenue"));
             }

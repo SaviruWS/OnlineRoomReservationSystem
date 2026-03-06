@@ -15,7 +15,7 @@
 <head>
     <title>Manage Users - Ocean View Resort</title>
     <style>
-        /* Body & general styling */
+      
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #1a1a2e;
@@ -24,7 +24,7 @@
             padding: 0;
         }
 
-        /* Header */
+       
         header {
             background: linear-gradient(90deg, #162447, #1f4068);
             padding: 25px 0;
@@ -35,21 +35,21 @@
             letter-spacing: 2px;
         }
 
-        /* Container for forms & tables */
+      
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 30px auto;
         }
 
-        /* Section headings */
+       
         h2, h3 {
             text-align: center;
             color: #e43f5a;
             margin-bottom: 20px;
         }
 
-        /* Form styling */
+      
         form {
             background-color: #162447;
             padding: 20px;
@@ -85,7 +85,7 @@
             transform: scale(1.05);
         }
 
-        /* Table styling */
+      
         table {
             border-collapse: collapse;
             width: 100%;
@@ -108,7 +108,7 @@
             background-color: #903749;
         }
 
-        /* Buttons inside table */
+      
         .table-btn {
             padding: 6px 12px;
             border: none;
@@ -215,7 +215,7 @@
 
 <div class="container">
 
-    <!-- Add New User Form -->
+   
     <h3>Add New User</h3>
     <form action="AddUserServlet" method="post">
         Username: <input type="text" name="username" required><br>
@@ -231,7 +231,7 @@
 
     <hr style="border:1px solid #e43f5a; margin: 40px 0;">
 
-    <!-- Users Table -->
+    
     <table>
         <tr>
             <th>ID</th>
@@ -280,7 +280,7 @@
     </table>
             </table>
 
-    <!-- Back Button -->
+   
     <button class="back-btn" onclick="window.location.href='adminDashboard.jsp'">
         Back to Dashboard
     </button>

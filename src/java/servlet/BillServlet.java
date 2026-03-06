@@ -37,7 +37,7 @@ public class BillServlet extends HttpServlet {
                 LocalDate checkout = rs.getDate("checkout").toLocalDate();
                 double price = rs.getDouble("price");
 
-                // ✅ Updated calculation using BillService
+                //  Updated calculation using BillService
                 BillService billService = new BillService();
                 long nights = billService.calculateNights(checkin, checkout);
                 double total = billService.calculateTotal(nights, price);
