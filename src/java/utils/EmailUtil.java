@@ -9,7 +9,7 @@ public class EmailUtil {
     public static void sendEmail(String toEmail, String subject, String messageText) {
 
         final String fromEmail = "savirubabaranda2002@gmail.com";
-        final String password = "newxixjzxwnybqee"; 
+        final String password = ""; 
 
         Properties props = new Properties();
 

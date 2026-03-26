@@ -66,6 +66,15 @@
 
 <header>Room Status</header>
 
+<%
+ArrayList<String[]> rooms = (ArrayList<String[]>) request.getAttribute("roomList");
+%>
+
+<!-- DEBUG (you can remove later) -->
+<p style="text-align:center;color:yellow;">
+    Total Rooms: <%= (rooms != null) ? rooms.size() : 0 %>
+</p>
+
 <table>
 <tr>
     <th>Room Number</th>
@@ -75,20 +84,25 @@
 </tr>
 
 <%
-ArrayList<String[]> rooms = (ArrayList<String[]>) request.getAttribute("roomList");
-if(rooms != null){
+if(rooms != null && !rooms.isEmpty()){
     for(String[] r : rooms){
 %>
 <tr>
     <td><%= r[0] %></td>
     <td><%= r[1] %></td>
-    <td>$ <%= r[2] %></td>
-    <td class="<%= r[3].equalsIgnoreCase("Available") ? "available" : "booked" %>">
+    <td>Rs. <%= r[2] %></td>
+    <td class="<%= (r[3] != null && r[3].equalsIgnoreCase("Available")) ? "available" : "booked" %>">
         <%= r[3] %>
     </td>
 </tr>
 <%
     }
+} else {
+%>
+<tr>
+    <td colspan="4">No rooms available</td>
+</tr>
+<%
 }
 %>
 
